@@ -1,7 +1,35 @@
-<Project Sdk="Microsoft.Build.NoTargets">
+﻿<Project Sdk="Microsoft.Build.NoTargets">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>WPF2274Workaround</PackageId>
+    <Version>1.0.0.5</Version>
+    <Authors>Vatsan Madhavan</Authors>
+    <Company>Vatsan Madhavan</Company>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/vatsan-madhavan/wpf2274</PackageProjectUrl>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RestoreAdditionalProjectSources>
+      https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-corefx-e946cebe-1/nuget/v3/index.json;
+      $(RestoreAdditionalProjectSources)
+    </RestoreAdditionalProjectSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE" Pack="true" PackagePath="\"/>
+    <None Include="build/**/*" Pack="true" PackagePath="%(RelativeDir)" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Mono.Cecil" Version="0.11.2" />
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="4.7.1" />
+  </ItemGroup>
 </Project>
