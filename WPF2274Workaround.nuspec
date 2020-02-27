@@ -14,7 +14,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="Directory.Build.props" target="build\WPF2274Workaround.props" />
-    <file src="Directory.Build.targets" target="build\WPF2274Workaround.targets" />
+    <file src="targets\WPF2274Workaround.props" target="build\WPF2274Workaround.props" />
+    <file src="targets\WPF2274Workaround.targets" target="build\WPF2274Workaround.targets" />
   </files>
 </package>
