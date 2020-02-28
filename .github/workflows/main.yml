@@ -18,3 +18,4 @@ jobs:
         dotnet-version: '3.1.102' # SDK Version to use.
     - run: git fetch --unshallow 
     - run: dotnet build 
+    - run: dotnet nuget push "bin/Release/WPF2274Workaround*.nupkg" --source "github"
