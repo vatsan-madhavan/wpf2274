@@ -19,6 +19,7 @@
   <PropertyGroup>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/vatsan-madhavan/wpf2274</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/vatsan-madhavan/wpf2274</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup>
