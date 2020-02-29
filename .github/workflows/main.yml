@@ -18,6 +18,6 @@ jobs:
         dotnet-version: '3.1.102' # SDK Version to use.
     - run: git fetch --unshallow 
     - run: dotnet build 
-    - run: dotnet nuget push bin\Release\${{ env:NuGetPackageName }} --source "github" --api-key '${{ secrets.GITHUB_TOKEN }}'
+    - run: dotnet nuget push bin\Release\$NuGetPackageName --source "github" --api-key '${{ secrets.GITHUB_TOKEN }}'
       env: 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
