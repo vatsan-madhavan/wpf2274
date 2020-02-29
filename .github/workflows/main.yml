@@ -16,6 +16,7 @@ jobs:
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.1.102' # SDK Version to use.
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run: git fetch --unshallow 
     - run: dotnet build -c Release
     - run: powershell -command "Get-ChildItem -Path bin\Release\*.nupkg | % { dotnet nuget push $_ --source github --api-key '${{ secrets.GITHUB_TOKEN }}' }"
