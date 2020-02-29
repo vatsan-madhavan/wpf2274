@@ -20,6 +20,14 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/vatsan-madhavan/wpf2274</PackageProjectUrl>
     <RepositoryUrl>https://github.com/vatsan-madhavan/wpf2274</RepositoryUrl>
+	
+	<!--
+		warning NU5105: The package version '1.0.6-ci.26' uses SemVer 2.0.0 or components of SemVer 1.0.0 that are not supported on legacy clients. Change the package version to a SemVer 1.0.0 string. If the version contains a release label it must start with a letter. This message can be ignored if the package is not intended for older clients.
+		
+		warning NU5128: Some target frameworks declared in the dependencies group of the nuspec and the lib/ref folder do not have exact matches in the other location. Consult the list of actions below:
+		  Add lib or ref assemblies for the netstandard2.0 target framework
+	-->
+	<NoWarn>$(NoWarn);NU5105;NU5128</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
