@@ -51,4 +51,27 @@
   </ItemGroup>
   
   <Target Name="EnsurePack" AfterTargets="Build" DependsOnTargets="Pack" />
+
+  <UsingTask
+  TaskName="SetEnvironmentVariableTask"
+  TaskFactory="RoslynCodeTaskFactory"
+  AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <Name ParameterType="System.String" Required="true" />
+      <Value ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+
+    <Task>
+      <Using Namespace="System" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+        Environment.SetEnvironmentVariable(Name, Value);
+      ]]>
+      </Code>
+    </Task>
+
+  </UsingTask>
+  <Target Name="ExportPackageNameToEnvironment" AfterTargets="Pack">
+    <SetEnvironmentVariableTask Name="NuGetPackageName" Value="$(PackageId).$(Version).nupkg"  />
+  </Target>
 </Project>
