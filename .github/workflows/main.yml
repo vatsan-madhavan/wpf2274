@@ -25,5 +25,3 @@ jobs:
     - run: |
         dotnet nuget push bin\Release\*.nupkg --source github --api-key ${{ secrets.GITHUB_TOKEN }}
       name: push
-      with:
-        repo-token: ${{ secrets.GITHUB.TOKEN }}
