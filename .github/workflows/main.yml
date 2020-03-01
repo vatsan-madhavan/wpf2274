@@ -29,7 +29,7 @@ jobs:
       name: build
     - run: |
         nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/vatsan-madhavan/index.json" 
-        nuget setApiKey ${{ secrets.GITHUB_TOKEN }} -Source "https://nuget.pkg.github.com/vatsan-madhavan/index.json"
+        nuget setApiKey ${{ secrets.GITHUB_TOKEN }} -Source "https://nuget.pkg.github.com/vatsan-madhavan/index.json" -ConfigFile nuget.config
         dotnet nuget push bin\Release\*.nupkg --source github --api-key ${{ secrets.GITHUB_TOKEN }}
       name: push packages to GitHub Package Registry
     
