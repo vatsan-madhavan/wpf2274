@@ -22,11 +22,14 @@ jobs:
     - uses: NuGet/setup-nuget@v1.0.2
       name: Setup NuGet.exe for use with actions
     - run: | 
+        git fetch --unshallow
+      name: Fetch sources
+    - run: | 
         dotnet build -c Release
       name: build
     - run: |
         nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/vatsan-madhavan/index.json" 
         nuget setApiKey ${{ secrets.GITHUB_TOKEN }} -Source "https://nuget.pkg.github.com/MY_ACCOUNT/index.json"
-        dotnet nuget push bin\Release\*.nupkg --source github 
+        nuget push bin\Release\*.nupkg --source github 
       name: push packages to GitHub Package Registry
     
