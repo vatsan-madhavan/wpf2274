@@ -19,9 +19,14 @@ jobs:
       with:
         dotnet-version: '3.1.102' # SDK Version to use.
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: NuGet/setup-nuget@v1.0.2
+      name: Setup NuGet.exe for use with actions
     - run: | 
         dotnet build -c Release
       name: build
     - run: |
-        dotnet nuget push bin\Release\*.nupkg --source github --api-key ${{ secrets.GITHUB_TOKEN }}
-      name: push
+        nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/vatsan-madhavan/index.json" 
+        nuget setApiKey ${{ secrets.GITHUB_TOKEN }} -Source "https://nuget.pkg.github.com/MY_ACCOUNT/index.json"
+        dotnet nuget push bin\Release\*.nupkg --source github 
+      name: push packages to GitHub Package Registry
+    
