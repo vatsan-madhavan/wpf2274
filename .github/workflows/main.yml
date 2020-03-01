@@ -21,5 +21,9 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run: | 
         dotnet build -c Release
+      name: build
+    - run: |
         dotnet nuget push bin\Release\*.nupkg --source github --api-key ${{ secrets.GITHUB_TOKEN }}
-      name: build and push
+      name: push
+      with:
+        repo-token: ${{ secrets.GITHUB.TOKEN }}
