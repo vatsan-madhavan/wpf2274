@@ -10,6 +10,13 @@
     </InitWindowsDesktopTempToolsDependsOn>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <MarkupCompilePass1DependsOn>
+      ReplaceSystemReflectionMetadataLoadContextInMarkupCompilePass1References;
+      $(MarkupCompilePass1DependsOn)
+    </MarkupCompilePass1DependsOn>
+  </PropertyGroup>
+
   <Target Name="EnsureWindowsDesktopToolsTempPath">
     <Delete Files="$(_WindowsDesktopToolsPlaceholderTempFile)" />
     <MakeDir Directories="$(_WindowsDesktopToolsPlaceholderTempFile)" />
@@ -173,6 +180,13 @@ public class AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.
 
   <Target Name="LoadAssemblyResolverForSystemReflectionMetadataLoadContext">
     <AssemblyResolverForSystemReflectionMetadataLoadContext />
+  </Target>
+
+  <Target Name="ReplaceSystemReflectionMetadataLoadContextInMarkupCompilePass1References">
+    <ItemGroup>
+      <ReferencePath Remove="@(ReferencePath)" Condition="'%(FileName)' == 'System.Reflection.MetadataLoadContext'" />
+      <ReferencePath Include="$(_WindowsDesktopToolsTempPath)\System.Reflection.MetadataLoadContext.dll" />
+    </ItemGroup>
   </Target>
 
   <Target Name="InitWindowsDesktopTempTools" 
