@@ -4,6 +4,8 @@ next-version: 1.0.6
 branches:
   master:
     mode: ContinuousDeployment
+  develop:
+    mode: ContinuousDeployment
 ignore:
   sha: []
 merge-message-formats: {}
