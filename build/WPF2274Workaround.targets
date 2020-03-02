@@ -94,7 +94,7 @@
              TaskFactory="RoslynCodeTaskFactory"
              AssemblyFile="$(MSBuildBinPath)\Microsoft.Build.Tasks.Core.dll">
     <Task>
-      <Code Type="class" Language="cs" />
+      <Code Type="class" Language="cs">
       <![CDATA[
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
@@ -144,6 +144,7 @@ public class AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.
   
 }
       ]]>
+      </Code>
     </Task>
   </UsingTask>
 
