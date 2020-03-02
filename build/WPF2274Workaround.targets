@@ -1,28 +1,28 @@
 <Project InitialTargets="InitWindowsDesktopTempTools">
   <PropertyGroup>
     <InitWindowsDesktopTempToolsDependsOn>
-      EnsureWindowsDesktopToolsTempPath;
-      GetPathToDependentBinaries;;
-      CopyWindowsDesktopToolsToTempPath;
-      CopyUpdatedSystemReflectionMetadataLoadContextAssembly;
-      LoadAssemblyResolverForSystemReflectionMetadataLoadContext;
+      _EnsureWindowsDesktopToolsTempPath;
+      _GetPathToDependentBinaries;;
+      _CopyWindowsDesktopToolsToTempPath;
+      _CopyUpdatedSystemReflectionMetadataLoadContextAssembly;
+      _LoadAssemblyResolverForSystemReflectionMetadataLoadContext;
       $(InitWindowsDesktopTempToolsDependsOn)
     </InitWindowsDesktopTempToolsDependsOn>
   </PropertyGroup>
 
   <PropertyGroup>
     <MarkupCompilePass1DependsOn>
-      ReplaceSystemReflectionMetadataLoadContextInMarkupCompilePass1References;
+      _ReplaceSystemReflectionMetadataLoadContextInMarkupCompilePass1References;
       $(MarkupCompilePass1DependsOn)
     </MarkupCompilePass1DependsOn>
   </PropertyGroup>
 
-  <Target Name="EnsureWindowsDesktopToolsTempPath">
+  <Target Name="_EnsureWindowsDesktopToolsTempPath">
     <Delete Files="$(_WindowsDesktopToolsPlaceholderTempFile)" />
     <MakeDir Directories="$(_WindowsDesktopToolsPlaceholderTempFile)" />
   </Target>
 
-  <Target Name="GetPathToDependentBinaries">
+  <Target Name="_GetPathToDependentBinaries">
     <ItemGroup>
       <TempProject Include="Project">
         <Body>
@@ -72,7 +72,7 @@
     <RemoveDir Directories="$(_HelperProjectFolder)" ContinueOnError="true"/>
   </Target>
 
-  <Target Name="CopyWindowsDesktopToolsToTempPath">
+  <Target Name="_CopyWindowsDesktopToolsToTempPath">
     <PropertyGroup>
       <_WindowsDesktopToolsSource>$([MSBuild]::Unescape($([System.IO.Path]::GetFullPath('$(MicrosoftWindowsDesktopSdkPath)\..\tools\$(MSBuildTfm)\'))))</_WindowsDesktopToolsSource>
     </PropertyGroup>
@@ -88,7 +88,7 @@
           SkipUnchangedFiles="true"/>
   </Target>
 
-  <Target Name="CopyUpdatedSystemReflectionMetadataLoadContextAssembly"
+  <Target Name="_CopyUpdatedSystemReflectionMetadataLoadContextAssembly"
           Condition="'$(PkgSystem_Reflection_MetadataLoadContext)' != ''">
     <Copy SourceFiles="$(PkgSystem_Reflection_MetadataLoadContext)\lib\$(_SystemReflectionMetadataLoadContextTfm)\System.Reflection.MetadataLoadContext.dll"
           DestinationFolder="$(_WindowsDesktopToolsTempPath)"
@@ -97,7 +97,7 @@
   </Target>
 
 
-  <UsingTask TaskName="AssemblyResolverForSystemReflectionMetadataLoadContext"
+  <UsingTask TaskName="_AssemblyResolverForSystemReflectionMetadataLoadContext"
              TaskFactory="RoslynCodeTaskFactory"
              AssemblyFile="$(MSBuildBinPath)\Microsoft.Build.Tasks.Core.dll">
     <ParameterGroup>
@@ -116,9 +116,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Reflection;
-public class AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.Build.Utilities.Task
+public class _AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.Build.Utilities.Task
 {
-  public AssemblyResolverForSystemReflectionMetadataLoadContext()
+  public _AssemblyResolverForSystemReflectionMetadataLoadContext()
   {
     AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(OnAppDomainAssemblyResolve);
   }
@@ -160,8 +160,6 @@ public class AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.
             }
         }
 
-
-            
         LogMessage(weakRefLog, "Failed to resolve " + dllName);
         return null;
     }
@@ -219,12 +217,12 @@ public class AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.
     </Task>
   </UsingTask>
 
-  <Target Name="LoadAssemblyResolverForSystemReflectionMetadataLoadContext">
-    <AssemblyResolverForSystemReflectionMetadataLoadContext AssemblyName="$(_WindowsDesktopToolsTempPath)\PresentationBuildTasks.dll"
+  <Target Name="_LoadAssemblyResolverForSystemReflectionMetadataLoadContext">
+    <_AssemblyResolverForSystemReflectionMetadataLoadContext AssemblyName="$(_WindowsDesktopToolsTempPath)\PresentationBuildTasks.dll"
                                                             WindowsDesktopToolsTempPath="$(_WindowsDesktopToolsTempPath)"/>
   </Target>
 
-  <Target Name="ReplaceSystemReflectionMetadataLoadContextInMarkupCompilePass1References">
+  <Target Name="_ReplaceSystemReflectionMetadataLoadContextInMarkupCompilePass1References">
     <ItemGroup>
       <ReferencePath Remove="@(ReferencePath)" Condition="'%(FileName)' == 'System.Reflection.MetadataLoadContext'" />
       <ReferencePath Include="$(_WindowsDesktopToolsTempPath)\System.Reflection.MetadataLoadContext.dll" />
