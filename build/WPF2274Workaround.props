@@ -19,13 +19,6 @@
       $(RestoreAdditionalProjectSources)
       </RestoreAdditionalProjectSources>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="$(_SystemReflectionMetadataLoadContextVersion)">
-      <GeneratePathProperty>true</GeneratePathProperty>
-      <IncludeAssets>none</IncludeAssets>
-      <ExcludeAssets>all</ExcludeAssets>
-    </PackageReference>
-  </ItemGroup>
 
   <PropertyGroup>
     <_SystemReflectionMetadataLoadContextTfm Condition="'$(MSBuildRuntimeType)' == 'Core'">netcoreapp3.0</_SystemReflectionMetadataLoadContextTfm>
