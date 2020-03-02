@@ -6,8 +6,6 @@
     <_WindowsDesktopToolsPlaceholderTempFile>$([System.IO.Path]::GetTempFileName())</_WindowsDesktopToolsPlaceholderTempFile>
     <_WindowsDesktopToolsTempPath Condition="'$(_WindowsDesktopToolsTempPath)' == ''">$(_WindowsDesktopToolsPlaceholderTempFile)\$(MSBuildTfm)\</_WindowsDesktopToolsTempPath>
     <_PresentationBuildTasksAssembly Condition="'$(_PresentationBuildTasksAssembly)'==''">$(_WindowsDesktopToolsTempPath)PresentationBuildTasks.dll</_PresentationBuildTasksAssembly>
-
-    <_MonoCecilDirectory>$(_WindowsDesktopToolsTempPath)MonoCecil\</_MonoCecilDirectory>
   </PropertyGroup>
 
   <PropertyGroup>
