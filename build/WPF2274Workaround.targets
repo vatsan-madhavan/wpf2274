@@ -124,9 +124,12 @@ public class AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.
   
   public override bool Execute()
   {
-    Assembly.LoadFrom(AssemblyName);
-    Log.LogMessage("Successfully Loaded " + AssemblyName");
-    return true;
+        var a = Assembly.LoadFrom(AssemblyName);
+        if (a != null)
+        {
+            Log.LogMessage("Successfully Loaded " + AssemblyName);
+        }
+      return true;
   }
     
   private Assembly OnAppDomainAssemblyResolve(object sender, ResolveEventArgs args)
