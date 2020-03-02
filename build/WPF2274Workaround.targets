@@ -68,7 +68,7 @@
       <PkgSystem_Reflection_MetadataLoadContext Condition="'$(PkgSystem_Reflection_MetadataLoadContext)' ==''">@(SystemReflectionMetadataLoadContextLocation)</PkgSystem_Reflection_MetadataLoadContext>
       <PkgSystem_Reflection_MetadataLoadContext>$([MSBuild]::Unescape($([System.IO.Path]::GetFullPath("$(PkgSystem_Reflection_MetadataLoadContext)..\..\"))))</PkgSystem_Reflection_MetadataLoadContext>
     </PropertyGroup>
-    <RemoveDir Directories="$(_HelperProjectFolder)" />
+    <RemoveDir Directories="$(_HelperProjectFolder)" ContinueOnError="true"/>
   </Target>
 
   <Target Name="CopyWindowsDesktopToolsToTempPath">
