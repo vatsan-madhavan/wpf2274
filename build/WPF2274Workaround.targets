@@ -125,6 +125,7 @@ public class AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.
   public override bool Execute()
   {
     Assembly.LoadFrom(AssemblyName);
+    Log.LogMessage("Successfully Loaded " + AssemblyName");
     return true;
   }
     
