@@ -100,6 +100,9 @@
   <UsingTask TaskName="AssemblyResolverForSystemReflectionMetadataLoadContext"
              TaskFactory="RoslynCodeTaskFactory"
              AssemblyFile="$(MSBuildBinPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <AssemblyName ParameterType="System.String" Required="true" />
+    </ParameterGroup>
     <Task>
       <Code Type="class" Language="cs">
       <![CDATA[
@@ -121,6 +124,7 @@ public class AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.
   
   public override bool Execute()
   {
+    Assembly.LoadFrom(AssemblyName);
     return true;
   }
     
@@ -172,6 +176,8 @@ public class AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.
             log.LogError(message);
         }
     }
+    
+    public virtual string AssemblyName { get; set; }
 }
       ]]>
       </Code>
@@ -179,7 +185,7 @@ public class AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.
   </UsingTask>
 
   <Target Name="LoadAssemblyResolverForSystemReflectionMetadataLoadContext">
-    <AssemblyResolverForSystemReflectionMetadataLoadContext />
+    <AssemblyResolverForSystemReflectionMetadataLoadContext AssemblyName="$(_WindowsDesktopToolsTempPath)\PresentationBuildTasks.dll"/>
   </Target>
 
   <Target Name="ReplaceSystemReflectionMetadataLoadContextInMarkupCompilePass1References">
