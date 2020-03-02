@@ -198,6 +198,9 @@ public class AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.
     }
     
     public virtual string AssemblyName { get; set; }
+    
+    public virtual string WindowsDesktopToolsTempPath { get; set; }
+
 }
       ]]>
       </Code>
