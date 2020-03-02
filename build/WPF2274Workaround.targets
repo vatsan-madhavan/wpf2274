@@ -142,6 +142,29 @@ public class AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.
         return null;
   }
   
+    private static void LogMessage(WeakReference<TaskLoggingHelper> weakRefLog, string message)
+    {
+        if (weakRefLog.TryGetTarget(out TaskLoggingHelper log))
+        {
+            log.LogMessage(message);
+        }
+    }
+
+    private static void LogWarning(WeakReference<TaskLoggingHelper> weakRefLog, string message)
+    {
+        if (weakRefLog.TryGetTarget(out TaskLoggingHelper log))
+        {
+            log.LogWarning(message);
+        }
+    }
+
+    private static void LogError(WeakReference<TaskLoggingHelper> weakRefLog, string message)
+    {
+        if (weakRefLog.TryGetTarget(out TaskLoggingHelper log))
+        {
+            log.LogError(message);
+        }
+    }
 }
       ]]>
       </Code>
