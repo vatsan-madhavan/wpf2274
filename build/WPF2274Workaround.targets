@@ -161,16 +161,21 @@ public class AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.
   
     private Assembly LoadAssembly(AssemblyName dllName)
     {
+        var weakRefLog = new WeakReference<TaskLoggingHelper>(Log);
+
         if (!string.IsNullOrEmpty(WindowsDesktopToolsTempPath) &&
-            Directory.Exists(WindowsDesktopToolsTempPath) &&
-            File.Exists(Path.Combine(WindowsDesktopToolsTempPath, dllName.FullName)))
+            Directory.Exists(WindowsDesktopToolsTempPath))
         {
-            return Assembly.LoadFrom(Path.Combine(WindowsDesktopToolsTempPath, dllName.FullName));
+            var file = Path.Combine(WindowsDesktopToolsTempPath, dllName.FullName);
+            if (File.Exists(file))
+            {
+                LogMessage(weakRefLog, "Loading from " + file);
+                return Assembly.LoadFrom(file);
+            }
         }
-        else
-        {
-            return Assembly.Load(dllName);
-        }
+
+        LogMessage(weakRefLog, "Loading from " + dllName.Name);
+        return Assembly.Load(dllName);
     }
   
     private static void LogMessage(WeakReference<TaskLoggingHelper> weakRefLog, string message)
