@@ -5,6 +5,12 @@
       GetPathToDependentBinaries;;
       CopyWindowsDesktopToolsToTempPath;
       CopyUpdatedSystemReflectionMetadataLoadContextAssembly;
+      $(InitWindowsDesktopTempToolsDependsOn)
+    </InitWindowsDesktopTempToolsDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(MSBuildRuntimeType)' != 'Core'">
+    <InitWindowsDesktopTempToolsDependsOn>
       LoadAssemblyResolverForSystemReflectionMetadataLoadContext;
       $(InitWindowsDesktopTempToolsDependsOn)
     </InitWindowsDesktopTempToolsDependsOn>
