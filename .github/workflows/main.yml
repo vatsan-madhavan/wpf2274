@@ -33,6 +33,6 @@ jobs:
       name: push packages to GitHub Package Registry
     - name: Publish to NuGet.org
       run: |
-        nuget push bin\Release\*.nupkg -Source https://nuget.org -k ${{ secrets.NUGET_TOKEN }}
+        nuget push bin\Release\*.nupkg -Source https://nuget.org -ApiKey ${{ secrets.NUGET_TOKEN }}
       
     
