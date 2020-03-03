@@ -28,8 +28,7 @@ jobs:
         dotnet build -c Release
       name: build
     - run: |
-        nuget source Add -Name GitHub -Source https://nuget.pkg.github.com/vatsan-madhavan/index.json
-        nuget setApiKey ${{ secrets.GITHUB_TOKEN }} -Source GitHub -ConfigFile NuGet.config
+        nuget Sources Add -Name github -Source https://nuget.pkg.github.com/vatsan-madhavan/index.json -UserName vatsan-madhavan -Password ${{ secrets.GITHUB_TOKEN }} -ConfigFile NuGet.config
         nuget push bin\Release\*.nupkg -Source GitHub
       name: push packages to GitHub Package Registry
     
