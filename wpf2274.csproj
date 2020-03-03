@@ -51,4 +51,12 @@
   </ItemGroup>
   
   <Target Name="EnsurePack" AfterTargets="Build" DependsOnTargets="Pack" />
+
+  <Target Name="CopyPackages" AfterTargets="Pack">
+    <MakeDir Directories="$(BaseOutputPath)packages\" />
+    <ItemGroup>
+      <_Nupkg Include="$(PackageOutputPath)*.nupkg" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_Nupkg)" DestinationFolder="$(BaseOutputPath)packages\" OverwriteReadOnlyFiles="true" />
+  </Target>
 </Project>
