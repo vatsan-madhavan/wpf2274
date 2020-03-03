@@ -118,59 +118,33 @@ using System.Text;
 using System.Reflection;
 public class _AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft.Build.Utilities.Task
 {
-  public _AssemblyResolverForSystemReflectionMetadataLoadContext()
-  {
-    AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(OnAppDomainAssemblyResolve);
-  }
-  
-  public override bool Execute()
-  {
+    public _AssemblyResolverForSystemReflectionMetadataLoadContext()
+    {
+        AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(OnAppDomainAssemblyResolve);
+    }
+
+    public override bool Execute()
+    {
         var a = Assembly.LoadFrom(AssemblyName);
         if (a != null)
         {
             Log.LogMessage("Successfully Loaded " + AssemblyName);
         }
-      return true;
-  }
-    
+        return true;
+    }
+
     private Assembly OnAppDomainAssemblyResolve(object sender, ResolveEventArgs args)
     {
         var dllName = new AssemblyName(args.Name);
-        if (dllName.Name.Equals("System.Reflection.MetadataLoadContext", StringComparison.OrdinalIgnoreCase) && 
-            args.RequestingAssembly.GetName().Name.Equals("PresentationBuildTasks",StringComparison.OrdinalIgnoreCase))
+        var path = Path.Combine(WindowsDesktopToolsTempPath, dllName.Name + ".dll");
+        if (File.Exists(path))
         {
-            var targetVersion = new Version(4, 0, 1, 1);
-            if (dllName.Version != targetVersion)
-            {
-                dllName.Version = new Version(4, 0, 1, 1);
-                return Assembly.Load(dllName);
-            }
-
-            if (dllName.Version == targetVersion)
-            {
-                var path = Path.Combine(WindowsDesktopToolsTempPath, "System.Reflection.MetadataLoadContext.dll");
-                return Assembly.LoadFrom(path);
-            }
+            return Assembly.LoadFrom(path);
         }
         return null;
     }
-  
-    private Assembly LoadAssembly(AssemblyName dllName)
-    {
-        if (!string.IsNullOrEmpty(WindowsDesktopToolsTempPath) &&
-            Directory.Exists(WindowsDesktopToolsTempPath))
-        {
-            var file = Path.Combine(WindowsDesktopToolsTempPath, dllName.FullName);
-            if (File.Exists(file))
-            {
-                return Assembly.LoadFrom(file);
-            }
-        }
 
-        return Assembly.Load(dllName);
-    }
-  
-    
+
     public virtual string AssemblyName { get; set; }
 
     public virtual string WindowsDesktopToolsTempPath { get; set; }
