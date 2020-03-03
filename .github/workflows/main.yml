@@ -31,4 +31,8 @@ jobs:
         nuget Sources Add -Name github -Source https://nuget.pkg.github.com/vatsan-madhavan/index.json -UserName vatsan-madhavan -Password ${{ secrets.GITHUB_TOKEN }} -ConfigFile NuGet.config
         nuget push bin\Release\*.nupkg -Source GitHub
       name: push packages to GitHub Package Registry
+    - name: Publish to NuGet.org
+      run: |
+        nuget push bin\Release\*.nupkg -Source https://nuget.org -k ${{ secrets.NUGET_TOKEN }}
+      
     
