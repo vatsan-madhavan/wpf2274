@@ -135,84 +135,44 @@ public class _AssemblyResolverForSystemReflectionMetadataLoadContext : Microsoft
     
     private Assembly OnAppDomainAssemblyResolve(object sender, ResolveEventArgs args)
     {
-        // Use a WeakReference to the logger - see https://github.com/NuGet/Home/issues/8688
-        var weakRefLog = new WeakReference<TaskLoggingHelper>(Log);
-
         var dllName = new AssemblyName(args.Name);
-
-        LogMessage(weakRefLog, "DLL: { " + dllName.Name + ", " + dllName.Version.ToString() + " }");
-
         if (dllName.Name.Equals("System.Reflection.MetadataLoadContext", StringComparison.OrdinalIgnoreCase) && 
             args.RequestingAssembly.GetName().Name.Equals("PresentationBuildTasks",StringComparison.OrdinalIgnoreCase))
         {
             var targetVersion = new Version(4, 0, 1, 1);
             if (dllName.Version != targetVersion)
             {
-                LogMessage(weakRefLog, "Redirecting System.Reflection.MetadataLoadContext, Version=" + targetVersion.ToString() + " to System.Reflection.MetadataLoadContext, Version=4.0.1.1");
-
                 dllName.Version = new Version(4, 0, 1, 1);
                 return Assembly.Load(dllName);
             }
 
             if (dllName.Version == targetVersion)
             {
-                LogMessage(weakRefLog, "Loading System.Reflection.MetadataLoadContext, Version=4.0.1.1 from " + WindowsDesktopToolsTempPath);
                 var path = Path.Combine(WindowsDesktopToolsTempPath, "System.Reflection.MetadataLoadContext.dll");
                 return Assembly.LoadFrom(path);
             }
         }
-
-
-            
-        LogMessage(weakRefLog, "Failed to resolve " + dllName);
         return null;
     }
   
     private Assembly LoadAssembly(AssemblyName dllName)
     {
-        var weakRefLog = new WeakReference<TaskLoggingHelper>(Log);
-
         if (!string.IsNullOrEmpty(WindowsDesktopToolsTempPath) &&
             Directory.Exists(WindowsDesktopToolsTempPath))
         {
             var file = Path.Combine(WindowsDesktopToolsTempPath, dllName.FullName);
             if (File.Exists(file))
             {
-                LogMessage(weakRefLog, "Loading from " + file);
                 return Assembly.LoadFrom(file);
             }
         }
 
-        LogMessage(weakRefLog, "Loading from " + dllName.Name);
         return Assembly.Load(dllName);
     }
   
-    private static void LogMessage(WeakReference<TaskLoggingHelper> weakRefLog, string message)
-    {
-        if (weakRefLog.TryGetTarget(out TaskLoggingHelper log))
-        {
-            log.LogMessage(message);
-        }
-    }
-
-    private static void LogWarning(WeakReference<TaskLoggingHelper> weakRefLog, string message)
-    {
-        if (weakRefLog.TryGetTarget(out TaskLoggingHelper log))
-        {
-            log.LogWarning(message);
-        }
-    }
-
-    private static void LogError(WeakReference<TaskLoggingHelper> weakRefLog, string message)
-    {
-        if (weakRefLog.TryGetTarget(out TaskLoggingHelper log))
-        {
-            log.LogError(message);
-        }
-    }
     
     public virtual string AssemblyName { get; set; }
-    
+
     public virtual string WindowsDesktopToolsTempPath { get; set; }
 
 }
