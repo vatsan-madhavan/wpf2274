@@ -12,12 +12,14 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1.0.1
     - uses: actions/checkout@master
       name: checkout
     - uses: actions/setup-dotnet@v1
       name: setup .net sdk
       with:
-        dotnet-version: '3.1.102' # SDK Version to use.
+        dotnet-version: '3.1.302' # SDK Version to use.
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - uses: NuGet/setup-nuget@v1.0.2
       name: Setup NuGet.exe for use with actions
@@ -25,7 +27,7 @@ jobs:
         git fetch --unshallow
       name: Fetch sources
     - run: | 
-        dotnet build -c Release
+        msbuild /p:Configuration=Release wpf2274.sln
       name: build
     - run: |
         nuget Sources Add -Name github -Source https://nuget.pkg.github.com/vatsan-madhavan/index.json -UserName vatsan-madhavan -Password ${{ secrets.GITHUB_TOKEN }} -ConfigFile NuGet.config
