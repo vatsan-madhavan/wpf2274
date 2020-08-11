@@ -27,7 +27,7 @@ jobs:
         git fetch --unshallow
       name: Fetch sources
     - run: | 
-        nuget restore wpf274.sln
+        nuget restore wpf2274.sln
       name: Restore Solution
     - run: | 
         msbuild /p:Configuration=Release wpf2274.sln
