@@ -9,13 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <_SystemReflectionMetadataLoadContextVersion>4.7.1</_SystemReflectionMetadataLoadContextVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RestoreAdditionalProjectSources>
-      https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-corefx-e946cebe-1/nuget/v3/index.json;
-      $(RestoreAdditionalProjectSources)
-      </RestoreAdditionalProjectSources>
+    <_SystemReflectionMetadataLoadContextVersion>4.7.2</_SystemReflectionMetadataLoadContextVersion>
   </PropertyGroup>
 
   <PropertyGroup>
